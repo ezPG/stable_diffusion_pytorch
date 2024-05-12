@@ -50,4 +50,8 @@ class SelfAttention(nn.Module):
         
         #(Batch_size, nheads, seq_len, seq_len) @ (Batch_size, nheads, seq_len, dim/nheads) --> (Batch_size, nheads, seq_len, dim/nheads)
         output = torch.matmul(w, v)
-        output
+        
+        output = output.transpose(1, 2)
+        output = output.reshape(input_shape)
+        
+        return self.out_proj(output)
